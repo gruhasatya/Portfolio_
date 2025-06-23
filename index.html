@@ -4,12 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Bhaskar Reddy Bora | Portfolio</title>
-
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;900&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
   <!-- FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-
   <style>
     :root {
       --bg: #111;
@@ -57,7 +55,7 @@
       font-size:1rem;
       color: var(--accent);
     }
-    /* SCREEN 1: About Me */
+    /* SCREEN 1 */
     #screen1 header {
       margin-left:80px;
       padding:80px 40px;
@@ -72,59 +70,86 @@
     #screen1 span { display:block; margin-top:20px; width:60px; height:3px; background: var(--accent); }
     #screen1 p { margin-top:20px; max-width:600px; color: var(--subtext); font-size:1rem; line-height:1.6; }
 
-    /* SCREEN 2: My Journey Timeline */
+    /* ========== SCREEN 2: Timeline left, popup on hover ========== */
+    #screen2 {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
     #screen2 .timeline {
       margin-left:80px;
-      padding:80px 40px;
+      height:100vh;
       display:flex;
       flex-direction:column;
       justify-content:center;
-      gap:2rem;
-      flex:1;
-      position: relative;
-      /* subtle dotted background */
-      background-image: radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
-      background-size: 20px 20px;
-    }
-    #screen2 .timeline::before {
-      content: '';
-      position: absolute;
-      top: 80px;
-      bottom: 80px;
-      left: 40px;
-      width: 2px;
-      background: var(--accent);
+      align-items:flex-start;
+      gap:2.5rem;
+      padding:0 40px;
+      background:none;
+      position:relative;
     }
     #screen2 .event {
       display:flex;
-      align-items:flex-start;
-      gap:1rem;
+      align-items:center;
+      width: fit-content;
+      background: transparent;
+      padding: 0.5rem 1.5rem 0.5rem 0;
       position: relative;
-      margin-left: 60px;
-    }
-      display:flex;
-      align-items:flex-start;
-      gap:1rem;
+      cursor: default;
+      border-radius: 8px;
+      transition: background 0.2s;
     }
     #screen2 .year {
       font-size:1.5rem;
       font-weight:900;
       color: var(--accent);
-      width:80px;
+      margin-right:1.5rem;
+      white-space: nowrap;
       flex-shrink:0;
-      /* align on the line */
-      position: absolute;
-      left: -40px;
-      top: 0;
+      letter-spacing:0.5px;
+      position: static;
+      width: auto;
+      left: unset;
+      top: unset;
     }
-      font-size:1.5rem;
-      font-weight:900;
+    #screen2 .details h3 {
+      font-size:1.1rem;
+      font-weight:600;
+      margin:0;
+      white-space: nowrap;
+      color: var(--text);
+      transition: color 0.3s;
+    }
+    #screen2 .event:hover .details h3 {
       color: var(--accent);
-      width:80px;
-      flex-shrink:0;
     }
-    #screen2 .details h3 { font-size:1.2rem; margin:0; }
-    #screen2 .details p { margin-top:0.5rem; color: var(--subtext); font-size:0.9rem; line-height:1.4; }
+    #screen2 .popup {
+      display: none;
+      position: absolute;
+      left: 105%;
+      top: 50%;
+      transform: translateY(-50%);
+      max-width: 320px;
+      min-width: 220px;
+      padding: 1.2rem 1.3rem;
+      border-radius: 12px;
+      background: linear-gradient(to right, rgba(255,255,255,0.13), rgba(255,255,255,0.20));
+      color: var(--text);
+      box-shadow: 0 6px 22px rgba(0,0,0,0.18);
+      font-size: 1rem;
+      line-height: 1.6;
+      z-index: 12;
+      border-left: 4px solid var(--accent);
+      animation: slideIn .25s cubic-bezier(.18,.67,.6,1.22);
+    }
+    @keyframes slideIn {
+      from { opacity:0; transform:translateY(-50%) translateX(40px);}
+      to   { opacity:1; transform:translateY(-50%) translateX(0);}
+    }
+    #screen2 .event:hover .popup {
+      display: block;
+    }
 
     /* SCREEN 3: Projects */
     #screen3 .cards {
@@ -180,8 +205,7 @@
     .project-item h3 { margin:0; font-size:1.1rem; color: var(--accent); }
     .project-item .project-details { margin-top:0.5rem; font-size:0.9rem; color: var(--subtext); line-height:1.4; }
 
-    /* SCREEN 4: Get In Touch */
-    /* Apply styles to the section itself */
+    /* SCREEN 4: Contact */
     #screen4 {
       background: #0d0d0d;
       color: #e5e5e5;
@@ -287,12 +311,63 @@
       background: #fff;
     }
 
-    @media (max-width:768px) { (max-width:768px) {
-      section nav { display:none; }
-      #screen1 h1 { font-size:8vw; }
-      #screen2 .timeline { padding:40px 20px; margin-left:0; }
-      #screen3 .cards { flex-direction:column; }
-      .contact-container { flex-direction:column; }
+    /* ==== RESPONSIVE ==== */
+    @media (max-width: 1024px) {
+      #screen3 .cards {
+        flex-direction: column;
+        align-items: center;
+      }
+      #screen3 .section-second {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 1rem;
+      }
+      #screen3 .big-s {
+        display: none;
+      }
+      #screen3 .info {
+        max-width: 100%;
+      }
+    }
+    @media (max-width: 900px) {
+      #screen2 .timeline { padding-left: 0; margin-left: 0; }
+      #screen2 .event { padding-right: 0; }
+      #screen2 .popup {
+        left: 0; right: 0; top: 100%; transform:translateY(0);
+        margin-top: 10px; max-width:95vw; width:95vw; min-width:0;
+      }
+    }
+    @media (max-width: 768px) {
+      section nav { display: none; }
+      #screen1 h1 { font-size: 8vw; }
+      #screen1 p  { font-size: 0.9rem; max-width: 90%; }
+      #screen2 .timeline {
+        align-items: center;
+        padding: 40px 20px;
+        margin-left: 0;
+      }
+      #screen2 .event {
+        width: 100%;
+        justify-content: center;
+      }
+      #screen4 .contact-container {
+        flex-direction: column;
+        padding: 0 1rem;
+      }
+      #screen4 .contact-info,
+      #screen4 .contact-form {
+        width: 100%;
+      }
+      #screen4 .contact-form h2 {
+        font-size: 1.8rem;
+      }
+    }
+    @media (max-width: 480px) {
+      section { padding: 0; }
+      #screen1 header { padding: 60px 20px; }
+      #screen3 .card { min-width: 100%; }
+      #screen4 { padding: 2rem 1rem; }
     }
   </style>
 </head>
@@ -308,21 +383,36 @@
     </header>
   </section>
 
-  <!-- Screen 2 -->
+  <!-- Screen 2 (updated) -->
   <section id="screen2">
     <nav>MY JOURNEY<div class="logo">BRB</div></nav>
     <div class="timeline">
       <div class="event">
         <div class="year">2024</div>
-        <div class="details"><h3>Web Developer at Clarkson Library</h3><p>Built dynamic web pages and assisted with library database integration.</p></div>
+        <div class="details">
+          <h3>Web Developer at Clarkson Library</h3>
+        </div>
+        <div class="popup">
+          A web developer is a tech professional who designs, builds, and maintains websites and web applications. They can specialize in one part of a website (as a front-end or back-end developer) or be responsible for both (as a full-stack developer). As a web developer, it's your job to ensure a website is visually appealing, easy to navigate, and functions well. You can learn more about the programming languages, skills, and salaries of web developers in the following article.
+        </div>
       </div>
       <div class="event">
         <div class="year">2025</div>
-        <div class="details"><h3>Data Science Capstone Projects</h3><p>Completed emotion detection and parking violations analysis with end-to-end pipelines.</p></div>
+        <div class="details">
+          <h3>Data Science Capstone Projects</h3>
+        </div>
+        <div class="popup">
+          A web developer is a tech professional who designs, builds, and maintains websites and web applications. They can specialize in one part of a website (as a front-end or back-end developer) or be responsible for both (as a full-stack developer). As a web developer, it's your job to ensure a website is visually appealing, easy to navigate, and functions well. You can learn more about the programming languages, skills, and salaries of web developers in the following article.
+        </div>
       </div>
       <div class="event">
         <div class="year">2025</div>
-        <div class="details"><h3>EpicReads AWS Deployment</h3><p>Configured CI/CD pipelines and S3 hosting for static website deployments.</p></div>
+        <div class="details">
+          <h3>EpicReads AWS Deployment</h3>
+        </div>
+        <div class="popup">
+          A web developer is a tech professional who designs, builds, and maintains websites and web applications. They can specialize in one part of a website (as a front-end or back-end developer) or be responsible for both (as a full-stack developer). As a web developer, it's your job to ensure a website is visually appealing, easy to navigate, and functions well. You can learn more about the programming languages, skills, and salaries of web developers in the following article.
+        </div>
       </div>
     </div>
   </section>
@@ -355,7 +445,7 @@
         <h3>Contact Info</h3>
         <div class="info-item"><i class="fas fa-envelope"></i><div><small>Mail Us</small><br/><a href="mailto:gruhasatya733081@gmail.com">gruhasatya733081@gmail.com</a></div></div>
         <div class="info-item"><i class="fas fa-phone-alt"></i><div><small>Call Us</small><br/><a href="tel:+13156033800">+1 315-603-3800</a></div></div>
-        <div	class="info-item"><i class="fas fa-map-marker-alt"></i><div><small>Location</small><br/>206 Outer Main St, Potsdam, NY 13676<br/>United States, New York</div></div>
+        <div class="info-item"><i class="fas fa-map-marker-alt"></i><div><small>Location</small><br/>206 Outer Main St, Potsdam, NY 13676<br/>United States, New York</div></div>
         <h3>Social Info</h3>
         <div class="socials"><a href="https://github.com/gruhasatya" target="_blank"><i class="fab fa-github"></i></a><a href="https://www.linkedin.com/in/bhaskar-reddy-3857b1211" target="_blank"><i class="fab fa-linkedin"></i></a></div>
       </div>
