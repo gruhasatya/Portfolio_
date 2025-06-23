@@ -468,7 +468,7 @@
             message: this.message.value,
           };
           try {
-            const res = await fetch("https://tu6kyia279.execute-api.us-east-2.amazonaws.com", {
+            const res = await fetch("https://tu6kyia279.execute-api.us-east-2.amazonaws.com/SendContactEmail", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(formData),
