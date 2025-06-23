@@ -451,7 +451,36 @@
       </div>
       <div class="contact-form">
         <h2>Let’s work <span class="highlight">together.</span></h2>
-        <form action="#" method="post"><input type="text" name="name" placeholder="Name *" required><input type="email" name="email" placeholder="Email *" required><input type="text" name="subject" placeholder="Your Subject *"><textarea name="message" placeholder="Your Message *" rows="6"></textarea><button type="submit">Send Message</button></form>
+        <form id="contact-form">
+          <input type="text" name="name" placeholder="Name *" required>
+          <input type="email" name="email" placeholder="Email *" required>
+          <input type="text" name="subject" placeholder="Your Subject *">
+          <textarea name="message" placeholder="Your Message *" rows="6" required></textarea>
+          <button type="submit">Send Message</button>
+        </form>
+        <script>
+        document.getElementById("contact-form").addEventListener("submit", async function (e) {
+          e.preventDefault(); // stop the default form submission
+          const formData = {
+            name: this.name.value,
+            email: this.email.value,
+            subject: this.subject.value,
+            message: this.message.value,
+          };
+          try {
+            const res = await fetch("https://tu6kyia279.execute-api.us-east-2.amazonaws.com", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(formData),
+            });
+            const result = await res.json();
+            alert(result.message || "Message sent successfully!");
+          } catch (err) {
+            alert("Error sending message.");
+            console.error(err);
+          }
+        });
+        </script>
       </div>
     </div>
   </section>
