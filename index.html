@@ -32,7 +32,6 @@
       display: flex;
       flex-direction: column;
     }
-    /* Vertical nav for all screens */
     section nav {
       position:absolute;
       top:0; left:0;
@@ -55,7 +54,8 @@
       font-size:1rem;
       color: var(--accent);
     }
-    /* SCREEN 1 */
+
+    /* ========== SCREEN 1 ========== */
     #screen1 header {
       margin-left:80px;
       padding:80px 40px;
@@ -70,7 +70,7 @@
     #screen1 span { display:block; margin-top:20px; width:60px; height:3px; background: var(--accent); }
     #screen1 p { margin-top:20px; max-width:600px; color: var(--subtext); font-size:1rem; line-height:1.6; }
 
-    /* ========== SCREEN 2: Timeline left, popup on hover ========== */
+    /* ========== SCREEN 2: Timeline left, fixed detail box ========== */
     #screen2 {
       flex: 1;
       display: flex;
@@ -86,17 +86,14 @@
       align-items:flex-start;
       gap:2.5rem;
       padding:0 40px;
-      background:none;
-      position:relative;
     }
     #screen2 .event {
       display:flex;
       align-items:center;
-      width: fit-content;
       background: transparent;
       padding: 0.5rem 1.5rem 0.5rem 0;
-      position: relative;
-      cursor: default;
+      position: static;     /* remove relative context */
+      cursor: pointer;
       border-radius: 8px;
       transition: background 0.2s;
     }
@@ -107,11 +104,6 @@
       margin-right:1.5rem;
       white-space: nowrap;
       flex-shrink:0;
-      letter-spacing:0.5px;
-      position: static;
-      width: auto;
-      left: unset;
-      top: unset;
     }
     #screen2 .details h3 {
       font-size:1.1rem;
@@ -124,34 +116,39 @@
     #screen2 .event:hover .details h3 {
       color: var(--accent);
     }
+
+    /* fixed, center-right popup panel */
     #screen2 .popup {
       display: none;
-      position: absolute;
-      left: 105%;
+      position: fixed;
       top: 50%;
+      right: 40px;
       transform: translateY(-50%);
-      max-width: 320px;
-      min-width: 220px;
-      padding: 1.2rem 1.3rem;
-      border-radius: 12px;
-      background: linear-gradient(to right, rgba(255,255,255,0.13), rgba(255,255,255,0.20));
-      color: var(--text);
-      box-shadow: 0 6px 22px rgba(0,0,0,0.18);
+      width: 40%;
+      height: 75%;
+      min-width: 500px;
+      padding: 3rem 2.5rem;
+      border-radius: 30px;
+      background: linear-gradient(
+        to bottom right,
+        rgb(18 3 3 / 40%),
+        rgba(255, 255, 255, 0.20)
+      );
+      color: #ffffff;
+      animation: slideIn .25s cubic-bezier(.18,.67,.6,1.22);
+      z-index: 1000;
       font-size: 1rem;
       line-height: 1.6;
-      z-index: 12;
-      border-left: 4px solid var(--accent);
-      animation: slideIn .25s cubic-bezier(.18,.67,.6,1.22);
     }
-    @keyframes slideIn {
-      from { opacity:0; transform:translateY(-50%) translateX(40px);}
-      to   { opacity:1; transform:translateY(-50%) translateX(0);}
-    }
+    /* @keyframes slideIn {
+      from { opacity:0; transform:translateY(-50%) translateX(40px); }
+      to   { opacity:1; transform:translateY(-50%) translateX(0);   }
+    } */
     #screen2 .event:hover .popup {
       display: block;
     }
 
-    /* SCREEN 3: Projects */
+    /* ========== SCREEN 3 (unchanged) ========== */
     #screen3 .cards {
       display:flex;
       flex-wrap: wrap;
@@ -204,6 +201,7 @@
     .project-item:hover { background: rgba(255,255,255,0.1); max-height:20rem; }
     .project-item h3 { margin:0; font-size:1.1rem; color: var(--accent); }
     .project-item .project-details { margin-top:0.5rem; font-size:0.9rem; color: var(--subtext); line-height:1.4; }
+
 
     /* SCREEN 4: Contact */
     #screen4 {
@@ -373,6 +371,7 @@
 </head>
 <body>
 
+
   <!-- Screen 1 -->
   <section id="screen1">
     <nav>ABOUT ME<div class="logo">BRB</div></nav>
@@ -383,7 +382,7 @@
     </header>
   </section>
 
-  <!-- Screen 2 (updated) -->
+  <!-- Screen 2 (with original popup text) -->
   <section id="screen2">
     <nav>MY JOURNEY<div class="logo">BRB</div></nav>
     <div class="timeline">
@@ -433,7 +432,11 @@
     </div>
     <div class="section-second">
       <div class="big-s">M</div>
-      <div class="info"><div class="sec-num">1</div><h2>Machine Learning</h2><div class="project-list"></div></div>
+      <div class="info">
+        <div class="sec-num">1</div>
+        <h2>Machine Learning</h2>
+        <div class="project-list"></div>
+      </div>
     </div>
   </section>
 
